@@ -24,24 +24,26 @@ public class LinearRegression_2neurones {
 				.layer(new OutputLayer.Builder(LossFunctions.LossFunction.MSE)	// Mean Squared Error
 						.activation(Activation.IDENTITY)	//activation linéaire
 						.nIn(1)
-						.nOut(1)
+						.nOut(2)	//2 neuronnes en sortie
 						.build())
 				.build());
 		
 		model.init();
 		
 		//génération de données d'entraînement
-		double[] inTrain = new double[100];
-		double[] labelTrain = new double[100];
+		int nSamples = 100;
+		
+		double[] inTrain = new double[nSamples];
+		double[][] labelTrain = new double[nSamples][2];
 		for (int i = 0; i < 100; i++) {
 		    inTrain[i] = i;
-		    labelTrain[i] = 2 * i + 1;  // Toujours basé sur y = 2x + 1
+		    labelTrain[i][0] = 2 * i + 1;  // basé sur y = 2x + 1
+		    labelTrain[i][1] = 3 * 1 + 5;	//basé sur y = 3 x + 5
 		}
 		
-		// Données d'entraînement : x = {1, 2, 3, 4}, y = {3, 5, 7, 9}
-        // Correspond à y = 2 x + 1
-		INDArray input = Nd4j.create(inTrain, new int[] {100, 1});
-		INDArray labels = Nd4j.create(labelTrain, new int[] {100, 1});
+		// Données d'entraînement
+		INDArray input = Nd4j.create(inTrain, new int[] {nSamples, 1});
+		INDArray labels = Nd4j.createFromArray(labelTrain);
 		
 		DataSet dataSet = new DataSet(input, labels);
 		
@@ -69,6 +71,13 @@ public class LinearRegression_2neurones {
         System.out.println("Poids entraîné : " + weights.getDouble(0));
         System.out.println("Biais entraîné : " + bias.getDouble(0));
         
+     // Afficher les résultats
+        for (int i = 0; i < input.rows(); i++) {
+            double inputVal = input.getDouble(i);
+            double outputNeuron1 = output.getDouble(i, 0); // Sortie du premier neurone
+            double outputNeuron2 = output.getDouble(i, 1); // Sortie du deuxième neurone
+            System.out.println("Pour x = " + inputVal + " : Neurone 1 = " + outputNeuron1 + ", Neurone 2 = " + outputNeuron2);
+        }
         model.close();
 	}
 }
