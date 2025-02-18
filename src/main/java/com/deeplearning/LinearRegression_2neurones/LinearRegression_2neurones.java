@@ -49,6 +49,9 @@ public class LinearRegression_2neurones {
 		
 		DataSet dataSet = new DataSet(input, labels);
 		
+		//mélange des données pour garantir la qualité et la fiabilité de l'apprentissage.
+		dataSet.shuffle();
+		
 		//saut de lligne
 		System.out.println("");
 		
