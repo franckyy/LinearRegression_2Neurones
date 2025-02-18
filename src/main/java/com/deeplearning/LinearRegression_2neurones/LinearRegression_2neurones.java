@@ -2,13 +2,16 @@ package com.deeplearning.LinearRegression_2neurones;
 
 import java.util.Arrays;
 
+import org.deeplearning4j.datasets.iterator.utilty.ListDataSetIterator;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
 import org.deeplearning4j.nn.conf.layers.OutputLayer;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.nn.weights.WeightInit;
+import org.nd4j.evaluation.regression.RegressionEvaluation;
 import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.dataset.DataSet;
+import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 import org.nd4j.linalg.factory.Nd4j;
 import org.nd4j.linalg.learning.config.Adam;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
@@ -52,14 +55,30 @@ public class LinearRegression_2neurones {
 		//mélange des données pour garantir la qualité et la fiabilité de l'apprentissage.
 		dataSet.shuffle();
 		
+		// Division des données en ensembles d'entraînement (80%) et de validation (20%)
+        int trainSize = (int) (nSamples * 0.8);
+        int valSize = nSamples - trainSize;
+
+        DataSet trainData = (DataSet) dataSet.getRange(0, trainSize);
+        DataSet valData = (DataSet) dataSet.getRange(trainSize, nSamples);
+
+        // Création des itérateurs
+        DataSetIterator trainIterator = new ListDataSetIterator<>(trainData.asList(), trainSize);
+        DataSetIterator valIterator = new ListDataSetIterator<>(valData.asList(), valSize);
+
 		//saut de lligne
 		System.out.println("");
 		
+		int nEpochs = 8000;
+		
 		//Entraînement
-		for(int i = 0; i < 8000; i++) {
-			model.fit(dataSet);
-		    if (i % 500 == 0) {
-		        System.out.println("Époque " + i + " - Score: " + model.score());
+		for(int epoch = 0; epoch < nEpochs; epoch++) {
+			model.fit(trainIterator);
+		    if (epoch % 500 == 0) {
+		    	RegressionEvaluation eval = model.evaluateRegression(valIterator);
+		        System.out.println("Époque " + epoch + " - Score d'entraînement : " + model.score());
+		        System.out.println(eval.stats());
+                valIterator.reset();
 		    }
 		}
 		
