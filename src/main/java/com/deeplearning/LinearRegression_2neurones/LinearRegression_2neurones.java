@@ -1,5 +1,7 @@
 package com.deeplearning.LinearRegression_2neurones;
 
+import java.util.Arrays;
+
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
 import org.deeplearning4j.nn.conf.layers.OutputLayer;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
@@ -59,11 +61,20 @@ public class LinearRegression_2neurones {
 		INDArray testinput = Nd4j.create(new double[] {10, 100}, new int[] {2, 1});
 		INDArray output = model.output(testinput);
 		
+		//Affichages des formes des données
+		System.out.println("Output shape: " + Arrays.toString(output.shape()));
+		System.out.println("Input shape: " + input.shapeInfoToString());
+		System.out.println("Labels shape: " + labels.shapeInfoToString());
+		
+		//Récupération des poids et bias
 		INDArray weights = model.getParam("0_W");
 		INDArray bias = model.getParam("0_b");
 		
-		System.out.println("Input shape: " + input.shapeInfoToString());
-		System.out.println("Labels shape: " + labels.shapeInfoToString());
+		// Afficher les poids et les biais pour chaque neurone
+		for (int i = 0; i < weights.columns(); i++) {
+		    System.out.println("Poids du neurone " + (i + 1) + " : " + weights.getDouble(0, i));
+		    System.out.println("Biais du neurone " + (i + 1) + " : " + bias.getDouble(i));
+		}
 
 		// Afficher les résultats
         System.out.println("Prédiction pour x=10 : " + output.getDouble(0));
@@ -71,7 +82,7 @@ public class LinearRegression_2neurones {
         System.out.println("Poids entraîné : " + weights.getDouble(0));
         System.out.println("Biais entraîné : " + bias.getDouble(0));
         
-     // Afficher les résultats
+        // Afficher les résultats
         for (int i = 0; i < input.rows(); i++) {
             double inputVal = input.getDouble(i);
             double outputNeuron1 = output.getDouble(i, 0); // Sortie du premier neurone
