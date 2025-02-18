@@ -40,7 +40,7 @@ public class LinearRegression_2neurones {
 		for (int i = 0; i < 100; i++) {
 		    inTrain[i] = i;
 		    labelTrain[i][0] = 2 * i + 1;  // basé sur y = 2x + 1
-		    labelTrain[i][1] = 3 * 1 + 5;	//basé sur y = 3 x + 5
+		    labelTrain[i][1] = 3 * i + 5;	//basé sur y = 3 x + 5
 		}
 		
 		// Données d'entraînement
@@ -94,17 +94,6 @@ public class LinearRegression_2neurones {
             double predictionNeuron1 = output.getDouble(i, 0); // Prédiction du premier neurone
             double predictionNeuron2 = output.getDouble(i, 1); // Prédiction du deuxième neurone
             System.out.println("Pour x = " + inputVal + " : Neurone 1 = " + predictionNeuron1 + ", Neurone 2 = " + predictionNeuron2);
-        }
-		
-		//saut de lligne
-		System.out.println("");
-        
-        // Afficher les résultats
-        for (int i = 0; i < input.rows(); i++) {
-            double inputVal = input.getDouble(i);
-            double outputNeuron1 = output.getDouble(i, 0); // Sortie du premier neurone
-            double outputNeuron2 = output.getDouble(i, 1); // Sortie du deuxième neurone
-            System.out.println("Pour x = " + inputVal + " : Neurone 1 = " + outputNeuron1 + ", Neurone 2 = " + outputNeuron2);
         }
         model.close();
 	}
