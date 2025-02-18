@@ -61,8 +61,8 @@ public class LinearRegression_2neurones {
 		}
 		
 		//Faire une prédiction
-		INDArray testinput = Nd4j.create(new double[] {10, 100}, new int[] {2, 1});
-		INDArray output = model.output(testinput);
+		INDArray testInput = Nd4j.create(new double[] {10, 100}, new int[] {2, 1});
+		INDArray output = model.output(testInput);
 
 		//saut de lligne
 		System.out.println("");
@@ -87,10 +87,14 @@ public class LinearRegression_2neurones {
 		
 		//saut de lligne
 		System.out.println("");
-
-		// Afficher les résultats
-        System.out.println("Prédiction pour x=10 : " + output.getDouble(0));
-        System.out.println("Prédiction pour x=100 : " + output.getDouble(1));
+        
+        // Afficher les prédictions pour chaque entrée de test et chaque neurone
+        for (int i = 0; i < testInput.rows(); i++) {
+            double inputVal = testInput.getDouble(i);
+            double predictionNeuron1 = output.getDouble(i, 0); // Prédiction du premier neurone
+            double predictionNeuron2 = output.getDouble(i, 1); // Prédiction du deuxième neurone
+            System.out.println("Pour x = " + inputVal + " : Neurone 1 = " + predictionNeuron1 + ", Neurone 2 = " + predictionNeuron2);
+        }
 		
 		//saut de lligne
 		System.out.println("");
