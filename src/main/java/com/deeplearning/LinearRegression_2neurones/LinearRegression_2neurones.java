@@ -49,6 +49,9 @@ public class LinearRegression_2neurones {
 		
 		DataSet dataSet = new DataSet(input, labels);
 		
+		//saut de lligne
+		System.out.println("");
+		
 		//Entraînement
 		for(int i = 0; i < 8000; i++) {
 			model.fit(dataSet);
@@ -60,11 +63,17 @@ public class LinearRegression_2neurones {
 		//Faire une prédiction
 		INDArray testinput = Nd4j.create(new double[] {10, 100}, new int[] {2, 1});
 		INDArray output = model.output(testinput);
+
+		//saut de lligne
+		System.out.println("");
 		
 		//Affichages des formes des données
 		System.out.println("Output shape: " + Arrays.toString(output.shape()));
 		System.out.println("Input shape: " + input.shapeInfoToString());
 		System.out.println("Labels shape: " + labels.shapeInfoToString());
+		
+		//saut de lligne
+		System.out.println("");
 		
 		//Récupération des poids et bias
 		INDArray weights = model.getParam("0_W");
@@ -75,12 +84,16 @@ public class LinearRegression_2neurones {
 		    System.out.println("Poids du neurone " + (i + 1) + " : " + weights.getDouble(0, i));
 		    System.out.println("Biais du neurone " + (i + 1) + " : " + bias.getDouble(i));
 		}
+		
+		//saut de lligne
+		System.out.println("");
 
 		// Afficher les résultats
         System.out.println("Prédiction pour x=10 : " + output.getDouble(0));
         System.out.println("Prédiction pour x=100 : " + output.getDouble(1));
-        System.out.println("Poids entraîné : " + weights.getDouble(0));
-        System.out.println("Biais entraîné : " + bias.getDouble(0));
+		
+		//saut de lligne
+		System.out.println("");
         
         // Afficher les résultats
         for (int i = 0; i < input.rows(); i++) {
