@@ -40,7 +40,7 @@ public class LinearRegression_2neurones {
 		
 		double[] inTrain = new double[nSamples];
 		double[][] labelTrain = new double[nSamples][2];
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < nSamples; i++) {
 		    inTrain[i] = i;
 		    labelTrain[i][0] = 2 * i + 1;  // basé sur y = 2x + 1
 		    labelTrain[i][1] = 3 * i + 5;	//basé sur y = 3 x + 5
@@ -69,7 +69,7 @@ public class LinearRegression_2neurones {
 		//saut de lligne
 		System.out.println("");
 		
-		int nEpochs = 8000;
+		int nEpochs = 10000;
 		
 		//Entraînement
 		for(int epoch = 0; epoch < nEpochs; epoch++) {
